@@ -30,7 +30,7 @@
     }
     
     button {
-      padding: 12px 50px;
+      padding: 12px 36px;
       font-size: 18px;
       background: #222;
       color: #eee;
@@ -46,7 +46,7 @@
     #error {
       color: #ff4444;
       font-weight: bold;
-      min-height: 30px;
+      min-height: 24px;
     }
   </style>
 </head>
@@ -61,11 +61,10 @@
   <script>
   function sprawdz() {
     const wpisany = document.getElementById("kod").value.trim();
+    
     if (wpisany === "6222") {
       window.location.href = "tajne.html";
-    } else {
-      document.getElementById("error").innerText = "ㅤ"; // nadal puste, jak chciałeś
-    }
+    } 
   }
   </script>
 
