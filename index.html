@@ -44,15 +44,14 @@
     }
     
     #error {
-      color: #ff4444;
-      font-weight: bold;
       min-height: 24px;
     }
   </style>
 </head>
 <body>
 
-  <input type="text" id="kod" placeholder="ㅤ" autocomplete="off">
+  <input type="text" id="kod" placeholder="ㅤ" autocomplete="off" inputmode="numeric"
+         oninput="this.value = this.value.replace(/[^0-9]/g, '')">
   
   <button onclick="sprawdz()">?</button>
   
@@ -63,8 +62,8 @@
     const wpisany = document.getElementById("kod").value.trim();
     
     if (wpisany === "6222") {
-      window.location.href = "next.html";
-    } 
+      window.location.href = "tajne.html";
+    }
   }
   </script>
 
