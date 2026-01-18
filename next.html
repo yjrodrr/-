@@ -1,31 +1,134 @@
-/* Dodaj do swojego istniejącego <style> lub pliku css */
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>···</title>
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: #000000;
+      color: #0a0a0a;
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
 
-.dream-signature {
-  position: fixed;
-  bottom: 16px;
-  left: 20px;
-  font-size: 0.82rem;
-  letter-spacing: 0.4px;
-  opacity: 0.25;                    /* bardzo słabo widoczne */
-  color: var(--bg, #000000);        /* kolor identyczny z tłem strony */
-  pointer-events: none;             /* nie przeszkadza w klikaniu */
-  user-select: none;
-  z-index: 5;
-  font-family: inherit;             /* żeby pasowało do reszty strony */
-  transition: opacity 1.2s ease;
-}
+    .content {
+      display: none;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      letter-spacing: 6px;
+      user-select: none;
+    }
 
-.dream-signature:hover {
-  opacity: 0.55;                    /* lekko widoczne po najechaniu */
-}
+    /* Ekran z hasłem */
+    .password-screen {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      color: #111;
+    }
 
-.bold-dream {
-  font-weight: 900;
-  color: var(--bg, #000000);        /* też kolor tła */
-}
+    input[type="password"] {
+      background: #0a0a0a;
+      border: 1px solid #111;
+      color: #222;
+      padding: 14px 24px;
+      font-size: 1.3rem;
+      width: 280px;
+      text-align: center;
+      letter-spacing: 8px;
+    }
 
-/* 
-   Jeśli nie używasz zmiennej --bg, możesz po prostu wpisać kolor tła ręcznie, np.:
-   color: #0a0a0a;
-   (dopasuj do rzeczywistego koloru tła swojej strony głównej)
-*/
+    button {
+      background: #111;
+      color: #222;
+      border: none;
+      padding: 14px 40px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      letter-spacing: 2px;
+    }
+
+    button:hover {
+      background: #1a1a1a;
+    }
+
+    /* Niewidoczny podpis w lewym dolnym rogu */
+    .dream-signature {
+      position: fixed;
+      bottom: 16px;
+      left: 22px;
+      font-size: 0.78rem;
+      letter-spacing: 0.4px;
+      opacity: 0.18;
+      color: #000000;           /* dokładnie ten sam kolor co tło */
+      pointer-events: none;
+      user-select: none;
+      z-index: 10;
+      transition: opacity 1.4s ease;
+      font-weight: 300;
+    }
+
+    .dream-signature:hover {
+      opacity: 0.45;
+    }
+
+    .bold-dream {
+      font-weight: 900;
+      color: #000000;           /* też kolor tła */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="password-screen" id="pwdScreen">
+    <input type="password" id="pwdInput" placeholder="······" autocomplete="off">
+    <button onclick="checkPassword()">enter</button>
+  </div>
+
+  <div class="content" id="mainContent">
+    <!-- Tutaj jest Twoja prawdziwa strona główna -->
+    <!-- Na razie pusta, tak jak w pierwszym kodzie -->
+  </div>
+
+  <!-- Podpis, który zawsze jest, ale prawie niewidoczny -->
+  <div class="dream-signature">
+    I still see you in <span class="bold-dream">dreams</span>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const input = document.getElementById('pwdInput').value.trim();
+      const correct = "twoje_haslo";   // ← Zmień na swoje prawdziwe hasło
+
+      if (input === correct) {
+        document.getElementById('pwdScreen').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'flex';
+      } else {
+        document.getElementById('pwdInput').value = '';
+        document.getElementById('pwdInput').placeholder = 'złe';
+      }
+    }
+
+    // Opcjonalnie – wejście po naciśnięciu Enter
+    document.getElementById('pwdInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+  </script>
+
+</body>
+</html>
