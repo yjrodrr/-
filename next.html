@@ -1,134 +1,91 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>···</title>
-  
+  <meta charset="UTF-8">
+  <title></title>
   <style>
     body {
       margin: 0;
-      padding: 0;
       height: 100vh;
-      background: #000000;
-      color: #0a0a0a;
-      font-family: system-ui, -apple-system, sans-serif;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .content {
-      display: none;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.8rem;
-      letter-spacing: 6px;
-      user-select: none;
-    }
-
-    /* Ekran z hasłem */
-    .password-screen {
-      position: fixed;
-      inset: 0;
       background: #000;
+      color: #eee;
+      font-family: sans-serif;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      gap: 30px;
-      color: #111;
+      align-items: center;
+      gap: 25px;
+      position: relative; /* potrzebne do pozycjonowania podpisu */
+      overflow: hidden;
     }
-
-    input[type="password"] {
-      background: #0a0a0a;
-      border: 1px solid #111;
-      color: #222;
-      padding: 14px 24px;
-      font-size: 1.3rem;
-      width: 280px;
+    input {
+      padding: 12px;
+      font-size: 20px;
+      width: 220px;
       text-align: center;
-      letter-spacing: 8px;
-    }
-
-    button {
       background: #111;
-      color: #222;
-      border: none;
-      padding: 14px 40px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      letter-spacing: 2px;
+      color: #eee;
+      border: 1px solid #444;
+      border-radius: 6px;
     }
-
+    button {
+      padding: 12px 36px;
+      font-size: 18px;
+      background: #222;
+      color: #eee;
+      border: 1px solid #555;
+      border-radius: 6px;
+      cursor: pointer;
+    }
     button:hover {
-      background: #1a1a1a;
+      background: #333;
     }
 
     /* Niewidoczny podpis w lewym dolnym rogu */
-    .dream-signature {
-      position: fixed;
-      bottom: 16px;
-      left: 22px;
-      font-size: 0.78rem;
-      letter-spacing: 0.4px;
-      opacity: 0.18;
-      color: #000000;           /* dokładnie ten sam kolor co tło */
+    .signature {
+      position: absolute;
+      bottom: 12px;
+      left: 18px;
+      font-size: 0.8rem;
+      color: #000; /* dokładnie kolor tła */
       pointer-events: none;
       user-select: none;
-      z-index: 10;
-      transition: opacity 1.4s ease;
-      font-weight: 300;
+      opacity: 0.3;
+      transition: opacity 0.8s ease;
     }
-
-    .dream-signature:hover {
-      opacity: 0.45;
+    .signature:hover {
+      opacity: 0.6;
     }
-
-    .bold-dream {
+    .bold {
       font-weight: 900;
-      color: #000000;           /* też kolor tła */
+      color: #000; /* też kolor tła */
     }
   </style>
 </head>
 <body>
+  <input type="text" id="code" placeholder="ㅤ" autocomplete="off"
+         oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+  <button onclick="check()">?</button>
 
-  <div class="password-screen" id="pwdScreen">
-    <input type="password" id="pwdInput" placeholder="······" autocomplete="off">
-    <button onclick="checkPassword()">enter</button>
+  <!-- Niewidoczny podpis -->
+  <div class="signature">
+    I still see you in <span class="bold">dreams</span>
   </div>
 
-  <div class="content" id="mainContent">
-    <!-- Tutaj jest Twoja prawdziwa strona główna -->
-    <!-- Na razie pusta, tak jak w pierwszym kodzie -->
-  </div>
-
-  <!-- Podpis, który zawsze jest, ale prawie niewidoczny -->
-  <div class="dream-signature">
-    I still see you in <span class="bold-dream">dreams</span>
-  </div>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
   <script>
-    function checkPassword() {
-      const input = document.getElementById('pwdInput').value.trim();
-      const correct = "twoje_haslo";   // ← Zmień na swoje prawdziwe hasło
-
-      if (input === correct) {
-        document.getElementById('pwdScreen').style.display = 'none';
-        document.getElementById('mainContent').style.display = 'flex';
-      } else {
-        document.getElementById('pwdInput').value = '';
-        document.getElementById('pwdInput').placeholder = 'złe';
-      }
+  const CORRECT_HASH = "5c3a3f5e8e0a5c8e0d7b0e5f8e0a5c8e0d7b0e5f8e0a5c8e0d7b0e5f8e0a5c8e"; // sha256("dreams")
+  function check() {
+    const entered = document.getElementById("code").value.trim();
+   
+    if (!entered) return;
+   
+    const enteredHash = sha256(entered);
+   
+    if (enteredHash === CORRECT_HASH) {
+      window.location.href = "next.html";
     }
-
-    // Opcjonalnie – wejście po naciśnięciu Enter
-    document.getElementById('pwdInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        checkPassword();
-      }
-    });
+  }
   </script>
-
 </body>
 </html>
