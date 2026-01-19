@@ -65,13 +65,23 @@
     const CORRECT_HASH = "519ba91a5a5b4afb9dc66f8805ce8c442b6576316c19c6896af2fa9bda6aff71";
 
     function check() {
-      const entered = document.getElementById("code").value.trim().toLowerCase();
-      if (!entered) return;
-      
+      const input = document.getElementById("code").value.trim();
+      if (!input) return;
+
+      // konwersja na małe litery – na wszelki wypadek
+      const entered = input.toLowerCase();
+
       const enteredHash = sha256(entered);
-      
+
+      console.log("Wpisałeś:", entered);           // ← do debugowania
+      console.log("Hash:", enteredHash);           // ← do debugowania
+
       if (enteredHash === CORRECT_HASH) {
         window.location.href = "next2.html";
+      } else {
+        // opcjonalnie – mała informacja o błędzie
+        document.getElementById("code").value = "";
+        document.getElementById("code").placeholder = "źle...";
       }
     }
   </script>
