@@ -62,14 +62,16 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
   <script>
-    const CORRECT_HASH = "1f6f699c758927baadc825ad46bf7476d650b346a294b2bf9d457887b57f5153"; // "dreams"
+    const CORRECT_HASH = "a8af8341993604f29cd4e0e5a5a4b5d48c575436b8f99f1eb8e867d463065a93";
 
     function check() {
-      const entered = document.getElementById("code").value.trim();
+      const entered = document.getElementById("code").value.trim().toLowerCase();
       if (!entered) return;
+      
       const enteredHash = sha256(entered);
+      
       if (enteredHash === CORRECT_HASH) {
-        window.location.href = "next.html";
+        window.location.href = "next2.html";
       }
     }
   </script>
