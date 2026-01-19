@@ -14,20 +14,17 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 35px;
-    }
-
-    .hint-container {
-      margin-bottom: 120px;     /* ← tutaj przesuwamy liczby mocno w dół */
+      gap: 45px;
     }
 
     .hint {
       color: #ffffff;
-      font-size: 27px;
-      letter-spacing: 6px;
+      font-size: 24px;
+      letter-spacing: 5px;
       font-weight: 300;
       font-family: monospace;
       user-select: none;
+      margin-bottom: 80px;     /* ← tu jest główna zmiana – liczby dużo niżej */
     }
 
     input {
@@ -58,9 +55,7 @@
 </head>
 <body>
 
-  <div class="hint-container">
-    <div class="hint">1 14 7 5 12</div>
-  </div>
+  <div class="hint">1 14 7 5 12</div>
 
   <input type="text" id="code" placeholder="ㅤ" autocomplete="off"
          oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')">
@@ -70,14 +65,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
   <script>
   const CORRECT_HASH = "1f6f699c758927baadc825ad46bf7476d650b346a294b2bf9d457887b57f5153";
-
   function check() {
     const entered = document.getElementById("code").value.trim();
-    
+   
     if (!entered) return;
-    
+   
     const enteredHash = sha256(entered);
-    
+   
     if (enteredHash === CORRECT_HASH) {
       window.location.href = "next.html";
     }
