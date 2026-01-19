@@ -14,17 +14,15 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 45px;
+      gap: 25px;
     }
 
     .hint {
-      color: #ffffff;
-      font-size: 24px;
-      letter-spacing: 5px;
-      font-weight: 300;
-      font-family: monospace;
+      color: #fff;
+      font-size: 28px;
+      letter-spacing: 8px;
+      font-weight: 400;
       user-select: none;
-      margin-bottom: 80px;     /* ← tu jest główna zmiana – liczby dużo niżej */
     }
 
     input {
@@ -54,29 +52,22 @@
   </style>
 </head>
 <body>
-
   <div class="hint">1 14 7 5 12</div>
-
   <input type="text" id="code" placeholder="ㅤ" autocomplete="off"
-         oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')">
-
+         oninput="this.value = this.value.replace(/[^0-9]/g, '')">
   <button onclick="check()">?</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
   <script>
-  const CORRECT_HASH = "1f6f699c758927baadc825ad46bf7476d650b346a294b2bf9d457887b57f5153";
-  function check() {
-    const entered = document.getElementById("code").value.trim();
-   
-    if (!entered) return;
-   
-    const enteredHash = sha256(entered);
-   
-    if (enteredHash === CORRECT_HASH) {
-      window.location.href = "next.html";
+    const CORRECT_HASH = "1f6f699c758927baadc825ad46bf7476d650b346a294b2bf9d457887b57f5153"; // hash dla "dreams"
+    function check() {
+      const entered = document.getElementById("code").value.trim();
+      if (!entered) return;
+      const enteredHash = sha256(entered);
+      if (enteredHash === CORRECT_HASH) {
+        window.location.href = "next.html";
+      }
     }
-  }
   </script>
-
 </body>
 </html>
