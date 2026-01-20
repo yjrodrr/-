@@ -48,16 +48,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
   <script>
   const CORRECT_HASH = "3865e98e8d3fe3316c6b8cb24219bf0847bdd11b9f9b1940dda302111134c297";
+  const encodedTarget = "bmpobW5pLmx4bWw=";
+
+  function decodeTarget() {
+    const shifted = atob(encodedTarget);
+    let result = "";
+    for (let i = 0; i < shifted.length; i++) {
+      result += String.fromCharCode(shifted.charCodeAt(i) - 4);
+    }
+    return result;
+  }
 
   function check() {
     const entered = document.getElementById("code").value.trim();
-    
     if (!entered) return;
-    
+
     const enteredHash = sha256(entered);
-    
+
     if (enteredHash === CORRECT_HASH) {
-      window.location.href = "jfdije.html";
+      window.location.href = decodeTarget();
     }
   }
   </script>
