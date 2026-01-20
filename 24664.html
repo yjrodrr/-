@@ -16,7 +16,6 @@
       align-items: center;
       gap: 25px;
     }
-
     .hint {
       color: #fff;
       font-size: 28px;
@@ -24,7 +23,6 @@
       font-weight: 400;
       user-select: none;
     }
-
     input {
       padding: 12px;
       font-size: 20px;
@@ -35,7 +33,6 @@
       border: 1px solid #444;
       border-radius: 6px;
     }
-
     button {
       padding: 12px 36px;
       font-size: 18px;
@@ -45,19 +42,15 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
     button:hover {
       background: #333;
     }
   </style>
 </head>
 <body>
-
   <div class="hint">1 14 7 5 12</div>
-
   <input type="text" id="code" placeholder="ㅤ" autocomplete="off"
          oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')">
-
   <button onclick="check()">?</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
@@ -68,23 +61,15 @@
       const input = document.getElementById("code").value.trim();
       if (!input) return;
 
-      // konwersja na małe litery – na wszelki wypadek
       const entered = input.toLowerCase();
-
       const enteredHash = sha256(entered);
 
-      console.log("Wpisałeś:", entered);           // ← do debugowania
-      console.log("Hash:", enteredHash);           // ← do debugowania
-
       if (enteredHash === CORRECT_HASH) {
-        window.location.href = "next2.html";
+        window.location.href = "24862.html";
       } else {
-        // opcjonalnie – mała informacja o błędzie
         document.getElementById("code").value = "";
-        document.getElementById("code").placeholder = "źle...";
       }
     }
   </script>
-
 </body>
 </html>
