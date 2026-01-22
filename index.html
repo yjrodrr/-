@@ -1,78 +1,101 @@
 <script>
-	import { sha256 } from 'js-sha256';
+  let code = '';
 
-	const CORRECT_HASH = '3865e98e8d3fe3316c6b8cb24219bf0847bdd11b9f9b1940dda302111134c297';
-	const encoded = 'amZkaWplLmh0bWw=';
+  const CORRECT_HASH = '3865e98e8d3fe3316c6b8cb24219bf0847bdd11b9f9b1940dda302111134c297';
+  const encoded = 'amZkaWplLmh0bWw='; // → fjdije.html
 
-	let code = '';
+  async function computeSHA256(input) {
+    const msgBuffer = new TextEncoder().encode(input);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
 
-	function check() {
-		if (!code.trim()) return;
+  async function check() {
+    if (!code.trim()) return;
 
-		const hash = sha256(code.trim());
+    const hash = await computeSHA256(code.trim());
+    if (hash === CORRECT_HASH) {
+      const nextPage = atob(encoded);
+      window.location.href = nextPage;
+    } else {
+      // opcjonalnie: code = '';  // czyścić pole po złym kodzie
+      alert('Nieprawidłowy kod'); // albo zrób ładniejszy feedback
+    }
+  }
 
-		if (hash === CORRECT_HASH) {
-			const url = atob(encoded);
-			window.location.href = url;
-		}
-	}
-
-	// Opcjonalnie – wejście po naciśnięciu Enter
-	function handleKeydown(event) {
-		if (event.key === 'Enter') {
-			check();
-		}
-	}
+  // Opcjonalnie – sprawdzaj po naciśnięciu Enter
+  function handleKeydown(event) {
+    if (event.key === 'Enter') {
+      check();
+    }
+  }
 </script>
 
-<main>
-	<input
-		type="text"
-		placeholder="ㅤ"
-		autocomplete="off"
-		bind:value={code}
-		on:keydown={handleKeydown}
-	/>
+<div class="container">
+  <input
+    type="text"
+    bind:value={code}
+    placeholder="ㅤ"
+    autocomplete="off"
+    on:keydown={handleKeydown}
+  />
 
-	<button on:click={check}>?</button>
-</main>
+  <button on:click={check}>?</button>
+</div>
 
 <style>
-	:global(body) {
-		margin: 0;
-		height: 100vh;
-		background: #000;
-		color: #eee;
-		font-family: sans-serif;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 25px;
-	}
+  :global(html), :global(body) {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #000;
+    color: #eee;
+    font-family: system-ui, sans-serif;
+  }
 
-	input {
-		padding: 12px;
-		font-size: 20px;
-		width: 220px;
-		text-align: center;
-		background: #111;
-		color: #eee;
-		border: 1px solid #444;
-		border-radius: 6px;
-	}
+  .container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+  }
 
-	button {
-		padding: 12px 36px;
-		font-size: 18px;
-		background: #222;
-		color: #eee;
-		border: 1px solid #555;
-		border-radius: 6px;
-		cursor: pointer;
-	}
+  input {
+    padding: 12px;
+    font-size: 20px;
+    width: 220px;
+    text-align: center;
+    background: #111;
+    color: #eee;
+    border: 1px solid #444;
+    border-radius: 6px;
+    outline: none;
+  }
 
-	button:hover {
-		background: #333;
-	}
+  input:focus {
+    border-color: #666;
+    box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.3);
+  }
+
+  button {
+    padding: 12px 36px;
+    font-size: 18px;
+    background: #222;
+    color: #eee;
+    border: 1px solid #555;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  button:hover {
+    background: #333;
+  }
+
+  button:active {
+    background: #444;
+  }
 </style>
