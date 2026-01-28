@@ -3,44 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Logowanie</title>
+  <title>System</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    body {
-      height: 100vh;
+
+    html, body {
+      height: 100%;
+      font-family: "Segoe UI", system-ui, sans-serif;
       background: #000;
-      color: #ddd;
-      font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+
+    /* ===== LOGIN ===== */
+    body {
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
     }
+
     .login-container {
       text-align: center;
     }
+
     .avatar {
       width: 104px;
       height: 104px;
       margin: 0 auto 32px;
-      position: relative;
     }
+
     .avatar svg {
       width: 100%;
       height: 100%;
       opacity: 0.75;
-      transition: opacity 0.4s ease;
     }
-    .avatar:hover svg {
-      opacity: 1;
-    }
+
     .login-box {
-      width: 320px;
+      width: 260px;
     }
+
     input[type="password"] {
       width: 100%;
       padding: 14px 20px;
@@ -52,30 +60,58 @@
       text-align: center;
       letter-spacing: 6px;
       font-family: monospace;
-      transition: all 0.25s;
     }
+
     input[type="password"]:focus {
       outline: none;
       background: rgba(255,255,255,0.08);
       border-color: rgba(255,255,255,0.25);
       box-shadow: 0 0 0 3px rgba(100,180,255,0.15);
     }
-    input::placeholder {
-      color: rgba(255,255,255,0.2);
-      letter-spacing: normal;
-    }
+
     .error {
       color: #ff4d4d;
       font-size: 14px;
       margin-top: 12px;
       min-height: 1.4em;
     }
-    #desktop {
+
+    /* ===== DESKTOP ===== */
+    .desktop {
       display: none;
       height: 100vh;
-      background: url('https://images.alphacoders.com/135/thumb-1920-135669.jpg') center/cover;
+      width: 100vw;
+      background: url('https://images.alphacoders.com/135/thumb-1920-135669.jpg') center/cover no-repeat;
       position: relative;
     }
+
+    .desktop-icons {
+      padding: 16px 20px;
+    }
+
+    .icon {
+      width: 74px;
+      text-align: center;
+      user-select: none;
+      transition: transform 0.1s;
+    }
+
+    .icon:hover {
+      transform: scale(1.08);
+    }
+
+    .icon img {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+    }
+
+    .icon span {
+      font-size: 12px;
+      text-shadow: 0 1px 2px #000;
+    }
+
     .taskbar {
       position: absolute;
       bottom: 12px;
@@ -84,21 +120,37 @@
       height: 52px;
       min-width: 360px;
       max-width: 92%;
-      background: rgba(30,30,46,0.68);
-      backdrop-filter: blur(20px);
+      background: rgba(30, 30, 46, 0.68);
+      backdrop-filter: blur(20px) saturate(180%);
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
       display: flex;
       align-items: center;
       padding: 0 32px;
       gap: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
     }
-    .spacer { flex: 1; }
+
+    .taskbar-item {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .taskbar-item:hover {
+      background: rgba(255,255,255,0.12);
+      transform: scale(1.12);
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
     .clock {
       font-size: 15px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.96);
       min-width: 60px;
       text-align: right;
     }
@@ -106,7 +158,8 @@
 </head>
 <body>
 
-<div class="login-container">
+<!-- LOGIN -->
+<div class="login-container" id="login">
   <div class="avatar">
     <svg viewBox="0 0 100 100" fill="none" stroke="#aaa" stroke-width="2.5">
       <circle cx="50" cy="35" r="20" />
@@ -115,19 +168,24 @@
   </div>
 
   <div class="login-box">
-    <input
-      type="password"
-      id="pass"
-      autocomplete="off"
-      autofocus
-      maxlength="4"
-    >
+    <input type="password" id="pass" maxlength="4" autofocus>
     <div class="error" id="msg"></div>
   </div>
 </div>
 
-<div id="desktop">
+<!-- DESKTOP -->
+<div class="desktop" id="desktop">
+  <div class="desktop-icons">
+    <div class="icon">
+      <img src="https://img.icons8.com/fluency/96/recycle-bin.png">
+      <span>Recycle Bin</span>
+    </div>
+  </div>
+
   <div class="taskbar">
+    <div class="taskbar-item">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
     <div class="spacer"></div>
     <div class="clock" id="clock">00:00</div>
   </div>
@@ -138,21 +196,16 @@
   const input = document.getElementById("pass");
   const msg = document.getElementById("msg");
 
-  input.addEventListener("input", () => {
-    msg.textContent = "";
-  });
-
   input.addEventListener("keypress", e => {
     if (e.key === "Enter") {
       if (input.value === HASLO) {
-        document.body.style.background = "none";
-        document.querySelector(".login-container").style.display = "none";
+        document.getElementById("login").style.display = "none";
         document.getElementById("desktop").style.display = "block";
+        document.body.style.display = "block";
         startClock();
       } else {
         msg.textContent = "błędne hasło";
         input.value = "";
-        input.focus();
       }
     }
   });
@@ -161,7 +214,7 @@
     setInterval(() => {
       const d = new Date();
       document.getElementById("clock").textContent =
-        d.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'});
+        d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     }, 1000);
   }
 </script>
