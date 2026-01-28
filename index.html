@@ -80,11 +80,7 @@
       width: 74px;
       text-align: center;
       user-select: none;
-      transition: transform 0.1s;
       cursor: pointer;
-    }
-    .icon:hover {
-      transform: scale(1.08);
     }
     .icon img {
       width: 48px;
@@ -126,10 +122,6 @@
       font-size: 18px;
       cursor: pointer;
     }
-    .taskbar-item:hover {
-      background: rgba(255,255,255,0.12);
-      transform: scale(1.12);
-    }
     .spacer {
       flex: 1;
     }
@@ -169,7 +161,6 @@
       <img src="https://img.icons8.com/fluency/96/recycle-bin.png" alt="Recycle Bin">
       <span>Recycle Bin</span>
     </div>
-    <!-- tu możesz dodać kolejne ikony -->
   </div>
 
   <div class="taskbar">
@@ -185,4 +176,32 @@
   const HASLO = "6222";
   const input = document.getElementById("pass");
   const login = document.getElementById("login");
-  const desktop = document
+  const desktop = document.getElementById("desktop");
+
+  input.addEventListener("keypress", e => {
+    if (e.key === "Enter") {
+      if (input.value === HASLO) {
+        login.style.display = "none";
+        desktop.style.display = "block";
+        document.body.classList.add("logged-in");
+        startClock();
+        input.value = "";
+      } else {
+        input.value = "";
+        input.focus();
+      }
+    }
+  });
+
+  function startClock() {
+    const update = () => {
+      const d = new Date();
+      document.getElementById("clock").textContent =
+        d.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+    };
+    update();
+    setInterval(update, 1000);
+  }
+</script>
+</body>
+</html>
