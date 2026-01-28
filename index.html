@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Logowanie</title>
+  <title></title>
   <style>
     * {
       margin: 0;
@@ -14,143 +14,122 @@
     body {
       height: 100vh;
       background: #000;
-      color: #ddd;
-      font-family: system-ui, -apple-system, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
     }
 
-    .login-container {
+    .login-screen {
       text-align: center;
     }
 
-    .avatar {
-      width: 88px;
-      height: 88px;
-      margin: 0 auto 40px;
-      position: relative;
-    }
-
-    .avatar svg {
-      width: 100%;
-      height: 100%;
-      opacity: 0.75;
+    .user-icon {
+      width: 90px;
+      height: 90px;
+      margin-bottom: 60px;
+      opacity: 0.65;
       transition: opacity 0.4s ease;
     }
 
-    .avatar:hover svg {
-      opacity: 1;
-    }
-
-    .login-box {
-      width: 320px;
+    .user-icon:hover {
+      opacity: 0.95;
     }
 
     input[type="password"] {
-      width: 100%;
-      padding: 14px 20px;
-      font-size: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      color: white;
+      width: 220px;
+      padding: 14px 0;
+      font-size: 28px;
+      letter-spacing: 18px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(200,200,200,0.18);
+      color: #f0f0f0;
       text-align: center;
-      letter-spacing: 6px;
       font-family: monospace;
-      transition: all 0.25s;
+      outline: none;
+      transition: all 0.3s ease;
     }
 
     input[type="password"]:focus {
-      outline: none;
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.25);
-      box-shadow: 0 0 0 3px rgba(100,180,255,0.15);
+      border-bottom-color: rgba(220,220,255,0.6);
+      letter-spacing: 22px;
     }
 
     input::placeholder {
-      color: rgba(255,255,255,0.2);
-      letter-spacing: normal;
+      opacity: 0;
     }
 
     .error {
-      color: #ff4d4d;
-      font-size: 14px;
-      margin-top: 12px;
-      min-height: 1.4em;
+      color: #ff4a4a;
+      font-size: 15px;
+      margin-top: 24px;
+      min-height: 20px;
+      opacity: 0.9;
     }
 
-    /* pulpit ukryty na początku */
+    /* pulpit – pojawia się po zalogowaniu */
     #desktop {
       display: none;
       height: 100vh;
-      background: url('https://images.alphacoders.com/135/thumb-1920-135669.jpg') center/cover;
+      background: url('https://images.alphacoders.com/135/thumb-1920-135669.jpg') center/cover no-repeat;
       position: relative;
     }
 
     .taskbar {
       position: absolute;
-      bottom: 12px;
+      bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
-      height: 52px;
-      min-width: 360px;
-      max-width: 92%;
-      background: rgba(30,30,46,0.68);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
+      height: 56px;
+      min-width: 380px;
+      max-width: 90%;
+      background: rgba(28, 28, 45, 0.70);
+      backdrop-filter: blur(22px);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.07);
       display: flex;
       align-items: center;
-      padding: 0 32px;
-      gap: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      padding: 0 36px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
     }
 
-    .spacer { flex: 1; }
+    .spacer {
+      flex: 1;
+    }
 
     .clock {
       font-size: 15px;
       font-weight: 500;
-      color: rgba(255,255,255,0.96);
-      min-width: 60px;
+      color: rgba(255,255,255,0.97);
+      min-width: 64px;
       text-align: right;
     }
   </style>
 </head>
 <body>
 
-<div class="login-container">
-  <div class="avatar">
-    <!-- Ikona w stylu Twojego obrazka -->
-    <svg viewBox="0 0 100 100" fill="none" stroke="#aaa" stroke-width="2">
-      <circle cx="50" cy="35" r="18" />
-      <path d="M50 53 
-               C 28 53, 18 70, 18 85
-               L 82 85
-               C 82 70, 72 53, 50 53 Z" />
-      <rect x="30" y="88" width="40" height="8" rx="2" />
-      <circle cx="38" cy="92" r="2" fill="#aaa" />
-      <circle cx="50" cy="92" r="2" fill="#aaa" />
-      <circle cx="62" cy="92" r="2" fill="#aaa" />
-    </svg>
-  </div>
+<div class="login-screen">
+  <!-- prosta ikona użytkownika -->
+  <svg class="user-icon" viewBox="0 0 100 100" fill="none" stroke="#cccccc" stroke-width="2.5">
+    <circle cx="50" cy="38" r="22" />
+    <path d="M50 60 
+             C 25 60, 15 78, 15 90 
+             L 85 90 
+             C 85 78, 75 60, 50 60 Z" />
+  </svg>
 
-  <div class="login-box">
-    <input 
-      type="password" 
-      id="pass" 
-      placeholder="hasło" 
-      autocomplete="off" 
-      autofocus
-      maxlength="4"
-    >
-    <div class="error" id="msg"></div>
-  </div>
+  <input 
+    type="password" 
+    id="pw" 
+    autocomplete="off" 
+    autofocus 
+    maxlength="4"
+  >
+
+  <div class="error" id="err"></div>
 </div>
 
-<!-- pulpit -->
 <div id="desktop">
   <div class="taskbar">
     <div class="spacer"></div>
@@ -160,23 +139,22 @@
 
 <script>
   const HASLO = "6222";
-
-  const input = document.getElementById("pass");
-  const msg   = document.getElementById("msg");
+  const input = document.getElementById("pw");
+  const err   = document.getElementById("err");
 
   input.addEventListener("input", () => {
-    msg.textContent = "";
+    err.textContent = "";
   });
 
-  input.addEventListener("keypress", e => {
+  input.addEventListener("keypress", function(e) {
     if (e.key === "Enter") {
       if (input.value === HASLO) {
         document.body.style.background = "none";
-        document.querySelector(".login-container").style.display = "none";
+        document.querySelector(".login-screen").style.display = "none";
         document.getElementById("desktop").style.display = "block";
         startClock();
       } else {
-        msg.textContent = "błędne hasło";
+        err.textContent = "błędne hasło";
         input.value = "";
         input.focus();
       }
@@ -185,11 +163,14 @@
 
   function startClock() {
     setInterval(() => {
-      const d = new Date();
+      const now = new Date();
       document.getElementById("clock").textContent = 
-        d.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'});
+        now.toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'});
     }, 1000);
   }
+
+  // fokus od razu po załadowaniu strony
+  window.addEventListener("load", () => input.focus());
 </script>
 
 </body>
